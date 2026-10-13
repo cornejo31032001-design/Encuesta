@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel de resultados</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <div id="vista-login" class="login-capa oculto">
+    <div class="login-caja">
+      <div class="tarjeta">
+        <div class="centrado">
+          <div style="font-size:2.4rem;">📊</div>
+          <h2 class="titulo" id="login-empresa">Panel de resultados</h2>
+          <p class="subtitulo">Ingresa con tu cuenta para ver las encuestas.</p>
+        </div>
+        <div id="aviso-login" class="aviso error oculto"></div>
+        <div id="aviso-demo" class="aviso info oculto">
+          Modo demo (sin conexión a la nube). Ingresa con cualquier usuario. Usa
+          <strong id="demo-admin">jefe@empresa.com</strong> para el rol de jefe/admin.
+        </div>
+        <form id="form-login">
+          <div class="campo">
+            <label class="etiqueta">Usuario / correo</label>
+            <input type="email" id="login-email" placeholder="correo@empresa.com" autocomplete="username" />
+          </div>
+          <div class="campo">
+            <label class="etiqueta">Contraseña</label>
+            <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password" />
+          </div>
+          <button type="submit" class="boton ancho" id="btn-login">Ingresar</button>
+        </form>
+        <p class="subtitulo centrado mt" style="margin-bottom:0;">
+          <a href="index.html">Volver al inicio</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div id="vista-panel" class="oculto">
+    <header class="encabezado">
+      <div class="marca">
+        <div class="punto">📊</div>
+        <h1 id="panel-empresa">Panel de resultados</h1>
+      </div>
+      <div class="fila">
+        <span class="login-pill" id="panel-usuario"></span>
+        <a href="index.html">Inicio</a>
+        <button class="boton secundario pequeno" id="btn-salir">Salir</button>
+      </div>
+    </header>
+
+    <main class="contenedor contenedor-ancho">
+      <div id="aviso-rol" class="aviso info oculto"></div>
+      <div id="aviso-panel" class="aviso error oculto"></div>
+
+      <div class="tarjeta">
+        <div class="fila">
+          <div>
+            <label class="etiqueta" style="margin-bottom:6px;">Técnico</label>
+            <select id="f-tecnico" style="min-width:190px;"></select>
+          </div>
+          <div>
+            <label class="etiqueta" style="margin-bottom:6px;">Tipo de consulta</label>
+            <select id="f-modo" style="min-width:150px;">
+              <option value="dia">Un día</option>
+              <option value="rango">Rango de fechas</option>
+            </select>
+          </div>
+          <div id="campo-dia">
+            <label class="etiqueta" style="margin-bottom:6px;">Fecha</label>
+            <input type="date" id="f-dia" />
+          </div>
+          <div id="campos-rango" class="oculto">
+            <div>
+              <label class="etiqueta" style="margin-bottom:6px;">Desde</label>
+              <input type="date" id="f-desde" />
+            </div>
+            <div>
+              <label class="etiqueta" style="margin-bottom:6px;">Hasta</label>
+              <input type="date" id="f-hasta" />
+            </div>
+          </div>
+          <div class="espacio"></div>
+          <div>
+            <label class="etiqueta" style="margin-bottom:6px;">&nbsp;</label>
+            <button class="boton secundario" id="btn-limpiar">Limpiar filtros</button>
+          </div>
+          <div>
+            <label class="etiqueta" style="margin-bottom:6px;">&nbsp;</label>
+            <button class="boton secundario solo-admin oculto" id="btn-exportar">Exportar CSV</button>
+          </div>
+        </div>
+      </div>
+
+      <section class="grid grid-4 mt">
+        <div class="kpi"><div class="valor" id="k-promedio">—</div><div class="nombre">Promedio (1-10)</div></div>
+        <div class="kpi"><div class="valor" id="k-total">—</div><div class="nombre">Encuestas recibidas</div></div>
+        <div class="kpi"><div class="valor" id="k-satisf">—</div><div class="nombre">Satisfacción (≥ 8)</div></div>
+        <div class="kpi"><div class="valor" id="k-alerta">—</div><div class="nombre">Bajas (≤ 5)</div></div>
+      </section>
+
+      <section class="grid grid-2 mt">
+        <div class="tarjeta">
+          <h3 class="titulo" style="font-size:1.1rem;">Promedio por técnico</h3>
+          <div class="grafico-caja"><canvas id="g-tecnicos"></canvas></div>
+        </div>
+        <div class="tarjeta">
+          <h3 class="titulo" style="font-size:1.1rem;">Distribución de puntajes</h3>
+          <div class="grafico-caja"><canvas id="g-puntajes"></canvas></div>
+        </div>
+      </section>
+
+      <section class="tarjeta mt">
+        <div class="fila mb">
+          <h3 class="titulo" style="font-size:1.1rem; margin:0;">Comentarios y respuestas</h3>
+          <div class="espacio"></div>
+          <span class="subtitulo" id="contador-tabla" style="margin:0;"></span>
+        </div>
+        <div class="tabla-envoltura">
+          <table>
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Técnico</th>
+                <th>Puntaje</th>
+                <th>Ánimo</th>
+                <th>Comentario</th>
+                <th>Cliente / Ticket</th>
+                <th class="solo-admin oculto"></th>
+              </tr>
+            </thead>
+            <tbody id="cuerpo-tabla"></tbody>
+          </table>
+        </div>
+        <div id="tabla-vacia" class="vacio oculto">No hay respuestas con los filtros seleccionados.</div>
+      </section>
+    </main>
+  </div>
+
+  <script src="assets/config.js"></script>
+  <script src="assets/datos.js"></script>
+  <script src="assets/panel.js"></script>
+</body>
+</html>

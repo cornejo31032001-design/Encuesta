@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Encuestas de soporte · Inicio</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+</head>
+<body>
+  <header class="encabezado">
+    <div class="marca">
+      <div class="punto">🎧</div>
+      <h1 id="empresa">Encuestas de soporte</h1>
+    </div>
+    <div class="fila">
+      <a href="panel.html">Panel del jefe</a>
+    </div>
+  </header>
+
+  <main class="contenedor contenedor-ancho">
+    <section class="tarjeta">
+      <h2 class="titulo">Sistema de encuestas de satisfacción</h2>
+      <p class="subtitulo" style="margin-bottom:0;">
+        Genera un enlace o código QR por cada técnico. El cliente lo abre, califica del 1 al 10,
+        deja su comentario y marca una carita. Todo se guarda en la nube y el jefe lo ve en el panel
+        filtrando por técnico y fecha.
+      </p>
+    </section>
+
+    <section class="tarjeta">
+      <h3 class="titulo" style="font-size:1.15rem;">Generar enlace / QR</h3>
+      <div class="grid grid-2">
+        <div>
+          <div class="campo">
+            <label class="etiqueta">Técnico</label>
+            <select id="gen-tecnico"></select>
+          </div>
+          <div class="campo">
+            <label class="etiqueta">Enlace de la encuesta</label>
+            <input type="text" id="gen-enlace" readonly />
+          </div>
+          <div class="fila">
+            <button class="boton" id="btn-copiar">Copiar enlace</button>
+            <a class="boton secundario" id="btn-abrir" href="#" target="_blank" rel="noopener">Abrir encuesta</a>
+          </div>
+        </div>
+        <div class="qr-caja">
+          <canvas id="qr"></canvas>
+          <p class="subtitulo" style="margin:10px 0 0;">Escanea para responder</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="tarjeta">
+      <h3 class="titulo" style="font-size:1.15rem;">Todos los enlaces</h3>
+      <div class="tabla-envoltura">
+        <table>
+          <thead>
+            <tr><th>Técnico</th><th>Enlace</th><th></th></tr>
+          </thead>
+          <tbody id="cuerpo-enlaces"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="tarjeta">
+      <h3 class="titulo" style="font-size:1.15rem;">Primeros pasos</h3>
+      <ol class="subtitulo" style="line-height:1.8; margin:0;">
+        <li>Edita <strong>assets/config.js</strong> y escribe los nombres reales de los técnicos.</li>
+        <li>Para pruebas ya funciona en <strong>modo demo</strong> (los datos se guardan en este navegador).</li>
+        <li>Para guardar en la nube: crea un proyecto gratis en supabase.com, ejecuta el SQL de
+          <strong>sql/schema.sql</strong> y pega la URL y la llave en <strong>config.js</strong>.</li>
+        <li>Publica la carpeta en Netlify (arrastrar y soltar) y comparte los enlaces con los clientes.</li>
+      </ol>
+    </section>
+  </main>
+
+  <script src="assets/config.js"></script>
+  <script src="assets/index.js"></script>
+</body>
+</html>

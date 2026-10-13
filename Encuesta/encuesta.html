@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Encuesta de satisfacción</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <header class="encabezado">
+    <div class="marca">
+      <div class="punto">🎧</div>
+      <h1 id="empresa">Encuesta de satisfacción</h1>
+    </div>
+  </header>
+
+  <main class="contenedor" style="max-width: 720px;">
+    <div class="tarjeta">
+      <div id="cargando" class="vacio">Cargando...</div>
+
+      <form id="formulario" class="oculto">
+        <h2 class="titulo" id="saludo">¿Cómo fue tu atención?</h2>
+        <p class="subtitulo">Tu opinión nos ayuda a mejorar. Solo toma un minuto.</p>
+
+        <div id="aviso-general" class="aviso error oculto"></div>
+
+        <div class="campo">
+          <label class="etiqueta">Técnico que te atendió</label>
+          <select id="sel-tecnico"></select>
+        </div>
+
+        <div class="campo">
+          <label class="etiqueta">1. Califica la atención del 1 al 10 <span class="req">*</span></label>
+          <div class="puntajes" id="puntajes"></div>
+          <div class="escada-puntaje"><span>1 · Muy malo</span><span>10 · Excelente</span></div>
+          <div id="aviso-puntaje" class="aviso error oculto" style="margin-top:10px;"></div>
+        </div>
+
+        <div class="campo">
+          <label class="etiqueta">2. ¿Cómo te sentiste con el servicio? <span class="req">*</span></label>
+          <div class="caritas" id="caritas"></div>
+        </div>
+
+        <div class="campo">
+          <label class="etiqueta">3. ¿Qué nos recomiendas mejorar?</label>
+          <textarea id="comentario" placeholder="Cuéntanos qué podemos hacer mejor..."></textarea>
+        </div>
+
+        <div class="grid grid-2 mb">
+          <div>
+            <label class="etiqueta">Tu nombre (opcional)</label>
+            <input type="text" id="cliente" placeholder="Nombre del cliente" />
+          </div>
+          <div>
+            <label class="etiqueta">N° de ticket (opcional)</label>
+            <input type="text" id="ticket" placeholder="Ej. TCK-1042" />
+          </div>
+        </div>
+
+        <button type="submit" class="boton ancho" id="btn-enviar">Enviar encuesta</button>
+        <p class="subtitulo centrado mt" style="margin-bottom:0;">Tus respuestas son confidenciales.</p>
+      </form>
+
+      <div id="gracias" class="oculto centrado">
+        <div class="grande">🎉</div>
+        <h2 class="titulo mt">¡Gracias por tu opinión!</h2>
+        <p class="subtitulo">Tu respuesta fue registrada correctamente.</p>
+      </div>
+    </div>
+  </main>
+
+  <script src="assets/config.js"></script>
+  <script src="assets/datos.js"></script>
+  <script src="assets/encuesta.js"></script>
+</body>
+</html>
